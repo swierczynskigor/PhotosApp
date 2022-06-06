@@ -8,8 +8,7 @@ function ViewImage(props) {
     const navigation = useNavigation()
 
     useEffect(() => {
-        //alert(props.route.params.item)
-        //alert(Sharing.isAvailableAsync())
+
     }, [])
 
     const handleDelete = async () => {

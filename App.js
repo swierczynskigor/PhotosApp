@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import S1 from "./components/S1"
 import S2 from "./components/S2"
 import ViewImage from './components/ViewImage';
+import CameraView from './components/CameraView';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,18 @@ function App() {
             },
           }}
           component={ViewImage} />
+        <Stack.Screen
+          name="Camera"
+          options={{
+            headerShown: false,
+            headerStyle: {
+              backgroundColor: '#723FF2', height: 10,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold', color: '#fff'
+            },
+          }}
+          component={CameraView} />
       </Stack.Navigator>
     </NavigationContainer>
   );
