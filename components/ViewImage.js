@@ -3,13 +3,13 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import * as MediaLibrary from "expo-media-library";
 import { useNavigation } from '@react-navigation/core';
 import * as Sharing from 'expo-sharing';
+import * as SecureStore from 'expo-secure-store';
 
 function ViewImage(props) {
     const navigation = useNavigation()
 
     useEffect(() => {
-        //alert(props.route.params.item)
-        //alert(Sharing.isAvailableAsync())
+
     }, [])
 
     const handleDelete = async () => {
@@ -27,6 +27,23 @@ function ViewImage(props) {
             alert(error.message);
         }
     }
+    const handleUpload = async () => {
+        const data = new FormData();
+
+        data.append('photo', {
+            uri: props.route.params.obj.uri,
+            type: 'image/jpeg',
+            name: props.route.params.obj.id
+        });
+
+        let resultServer = await SecureStore.getItemAsync('server')
+        let resultPort = await SecureStore.getItemAsync('port')
+
+        fetch(`http://${resultServer}:${resultPort}/upload`, {
+            method: 'POST',
+            body: data
+        }).then(() => alert('Image uploaded :D'))
+    }
     return (
         <View style={styles.container}>
             <Image
@@ -40,6 +57,9 @@ function ViewImage(props) {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleDelete}>
                     <Text style={{ fontSize: 40 }}>Delete</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleUpload}>
+                    <Text style={{ fontSize: 40 }}>Upload</Text>
                 </TouchableOpacity>
             </View>
         </View>
